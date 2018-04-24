@@ -1,0 +1,194 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Document</title>
+  <style>
+    body {
+      background: rgb(223, 81, 81) url(images/bg.gif);
+    }
+
+    .box {
+      background: url(images/content_bg.jpg) no-repeat;
+      width: 960px;
+      height: 627px;
+      margin: 14px auto 0;
+      position: relative;
+      user-select: none;
+    }
+
+    .tips {
+      width: 277px;
+      position: absolute
+    }
+
+    .fl {
+      float: left;
+    }
+
+    .fr {
+      float: right;
+    }
+
+    .tips-t {
+      width: 100%;
+      height: 68px;
+      background: url(images/tip1_h.gif) no-repeat;
+      background-size: cover;
+      font-size: 12px;
+      position: relative;
+      cursor: move;
+    }
+
+    .tips-t .num {
+      position: absolute;
+      bottom: 0;
+      padding: 0 15px;
+      width: 100%;
+      box-sizing: border-box;
+    }
+
+    .tips-t .num-r {
+      cursor: pointer;
+      width: 30px;
+      line-height: 1.5;
+      text-align: center;
+    }
+
+    .tips-c {
+      width: 100%;
+      background: url(images/tip1_c.gif) repeat-y;
+      background-size: 277px auto;
+      padding: 0 15px;
+      font-size: 14px;
+    }
+
+    .tips-f {
+      width: 100%;
+      height: 89px;
+      background: url(images/tip1_f.gif) no-repeat;
+      background-size: cover;
+      position: relative;
+    }
+
+    .tips-f .footer {
+      position: absolute;
+      top: 22px;
+      width: 100%;
+      padding: 0px 20px;
+      box-sizing: border-box;
+      font-size: 14px;
+      color: hotpink;
+    }
+  </style>
+</head>
+
+<body>
+  <div class="box">
+    <div class="tips">
+      <div class="tips-t">
+        <div class="num">
+          <div class="num-l fl">第[49568]条 2016-02-17 22:51:52</div>
+          <div class="num-r fr" id="close">×</div>
+        </div>
+      </div>
+      <div class="tips-c">
+        每天都被自己帅醒！！！
+      </div>
+      <div class="tips-f">
+        <div class="footer">
+          <div class="f-l fl">
+            <img src="images/bpic_1.gif" alt="">
+          </div>
+          <div class="f-l fr">做自己</div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <script>
+    // 克隆10个
+    var box = document.querySelector('.box');
+    var tips = document.querySelector('.tips');
+    for (var i = 0; i < 10; i++) {
+      var newTips = tips.cloneNode(true);
+      box.appendChild(newTips);
+    }
+    // 随机位置
+    var divs = document.querySelectorAll('.box>div');
+    var count = 0;
+    for (var i = 0; i < divs.length; i++) {
+      var x = parseInt(Math.random() * (box.offsetWidth - tips.offsetWidth));
+      var y = parseInt(Math.random() * (box.offsetHeight - tips.offsetHeight));
+
+      divs[i].style.left = x + 'px';
+      divs[i].style.top = y + 'px';
+      // 点击上移
+      divs[i].onclick = function () {
+        this.style.zIndex = ++count;
+      }
+      // 点击删除事件
+      // 双击事件
+      divs[i].firstElementChild.ondblclick = function () {
+        box.removeChild(this.parentNode);
+      }
+      // 点击关闭事件
+      divs[i].firstElementChild.firstElementChild.lastElementChild.onclick = function () {
+        box.removeChild(this.parentNode.parentNode.parentNode);
+      }
+    }
+    // 点击关闭
+    // var closes = document.querySelectorAll('#close');
+    // for (var i = 0; i < closes.length; i++) {
+    //   closes[i].onclick = function () {
+    //     this.parentNode.parentNode.parentNode.style.display = 'none';
+    //   }
+    // }
+    // 移动标签
+    var tips_t = document.querySelectorAll('.tips-t');
+    for (var i = 0; i < tips_t.length; i++) {
+      tips_t[i].onmousedown = function (e) {
+        this.parentNode.zIndex = count;
+          e = e || event;
+          var x = getPage(e).pageX - this.parentNode.offsetLeft;
+          var y = getPage(e).pageY - this.parentNode.offsetTop;
+          var maxX = box.offsetWidth- this.parentNode.offsetWidth;
+          var maxY = box.offsetHeight - this.parentNode.offsetHeight;
+          var that = this;
+        document.onmousemove = function (e) {          
+          var boxX = getPage(e).pageX - x;
+          var boxY = getPage(e).pageY - y;
+          boxX = boxX < 0 ? 0 : boxX;
+          boxY = boxY < 0 ? 0 : boxY;
+          boxX = boxX > maxX ? maxX : boxX;
+          boxY = boxY > maxY ? maxY : boxY;
+          that.parentNode.style.left = boxX + 'px';
+          that.parentNode.style.top = boxY + 'px';
+        }
+      }
+    }
+    document.onmouseup = function () {
+      document.onmousemove = null;
+    }
+
+    // 获取页面滚动出去的距离。处理兼容性
+    function getScroll() {
+      return {
+        scrollTop: document.documentElement.scrollTop || document.body.scrollTop,
+        scrollLeft: document.documentElement.scrollLeft || document.body.scrollLeft
+      }
+    }
+
+    // 获取鼠标在页面上的坐标  解决ie8的问题
+    function getPage(e) {
+      return {
+        pageX: e.clientX + getScroll().scrollLeft,
+        pageY: e.clientY + getScroll().scrollTop
+      }
+    }
+  </script>
+</body>
+
+</html>

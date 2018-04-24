@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Document</title>
+</head>
+<body>
+  账号：<input type="text" id="name"><span></span><br>
+  密码：<input type="text" id="password"><span></span><br>
+  <script>
+    var useName = document.querySelector('#name');
+    var psd = document.querySelector('password');
+    useName.onkeyup = function () {
+      var len = this.value.length;
+      if (len < 2 || len > 6) {
+        this.nextElementSibling.innerText = "用户名不能少于小于2或大于6";
+        this.nextElementSibling.style.color = 'red'
+      } else {
+        this.nextElementSibling.innerText = "";
+      }
+      console.log(this.nextElementSibling);
+      
+    }    
+  </script>
+</body>
+
+
+</html>

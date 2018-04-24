@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Document</title>
+  <style>
+    #table {
+      border-collapse: collapse;
+      height: 300px;
+      text-align: center;
+    }
+
+    thead tr {
+      background-color: rgb(35, 106, 228);
+      color: white;
+    }
+
+    thead tr:hover {
+      background-color: #eee;
+      color: rgb(19, 18, 18);
+    }
+
+    thead th {
+      height: 33px;
+    }
+
+    tbody tr {
+      background-color: #eee;
+    }
+
+    tbody tr:nth-child(odd) {
+      background-color: skyblue;
+    }
+  </style>
+</head>
+
+<body>
+  <table border="1" width='500' id="table">
+    <thead>
+      <tr>
+        <th>1</th>
+        <th>2</th>
+        <th>3</th>
+        <th>4</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td>1</td>
+        <td>2</td>
+        <td>3</td>
+        <td>4</td>
+      </tr>
+      <tr>
+        <td>1</td>
+        <td>2</td>
+        <td>3</td>
+        <td>4</td>
+      </tr>
+      <tr>
+        <td>1</td>
+        <td>2</td>
+        <td>3</td>
+        <td>4</td>
+      </tr>
+      <tr>
+        <td>1</td>
+        <td>2</td>
+        <td>3</td>
+        <td>4</td>
+      </tr>
+      <tr>
+        <td>1</td>
+        <td>2</td>
+        <td>3</td>
+        <td>4</td>
+      </tr>
+    </tbody>
+  </table>
+  <script>
+    var trs = document.querySelectorAll('#table tbody tr');
+    var tds = document.querySelectorAll('#table tbody td');
+    var cos = tds.length / trs.length;
+    for (var i = 0; i < tds.length; i++) {
+      tds[i].index = i;
+      tds[i].onmouseover = function () {
+        var start = this.index % cos;
+        for (var i = 0; i < trs.length; i++) {
+          var index = start + cos * i;
+          this.color = tds[index].style.backgroundColor;
+          tds[index].style.backgroundColor = 'yellow';
+        }
+      }
+      tds[i].onmouseout = function () {
+        var start = this.index % cos;
+        for (var i = 0; i < trs.length; i++) {
+          var index = start + cos * i;
+          tds[index].style.backgroundColor = this.color;
+        }
+      }
+    }
+    for (var i = 0; i < trs.length; i++) {
+      trs[i].onmouseover = function () {
+        this.color = this.style.backgroundColor;
+        this.style.backgroundColor = 'yellow';
+      }
+      trs[i].onmouseout = function () {
+        this.style.backgroundColor = this.color;
+      }
+    }
+  </script>
+</body>
+
+</html>

@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Document</title>
+  <style>
+    * {
+      padding: 0;
+      margin: 0;
+      list-style: none;
+    }
+
+    a {
+      text-decoration: none;
+      color: black;
+    }
+
+    #nav {
+      overflow: hidden;
+    }
+
+    #nav li {
+      float: left;
+      padding: 10px;
+      background-color: rgb(206, 198, 134);
+      margin: 0 10px;
+    }
+
+    #nav li.current {
+      background-color: rgb(233, 109, 233);
+    }
+  </style>
+</head>
+
+<body>
+  <ul id="nav">
+    <li class="current">
+      <a href="javascript:void(0)">首页</a>
+    </li>
+    <li>
+      <a href="javascript:void(0)">播客</a>
+    </li>
+    <li>
+      <a href="javascript:void(0)">你好</a>
+    </li>
+    <li>
+      <a href="javascript:void(0)">hello</a>
+    </li>
+    <li>
+      <a href="javascript:void(0)">萨瓦迪卡</a>
+    </li>
+    <li>
+      <a href="javascript:void(0)">haha</a>
+    </li>
+  </ul>
+
+  <script>
+    var links = document.querySelectorAll('#nav a');
+    var count = 0;
+    for (var i = 0; i < links.length; i++) {
+      links[i].index = i;
+      links[i].onmouseover = function () {
+        links[count].parentNode.className = '';
+        this.parentNode.className = 'current';
+        count = this.index;
+      }
+    }
+  </script>
+</body>
+
+</html>
